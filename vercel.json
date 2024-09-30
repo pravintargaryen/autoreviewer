@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "index.js", // Your entry point
+      "src": "index.js", 
       "use": "@vercel/node"
     }
   ],
@@ -17,7 +17,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "index.js", // Your entry point
+      "src": "index.js",
       "use": "@vercel/node"
     }
   ],
