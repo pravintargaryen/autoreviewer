@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Code Autograder</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 200px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      .results {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f4f4f4;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Python Code Autoreviewer</h1>
+
+    <form id="codeForm">
+      <label for="code">Enter Python Code:</label><br /><br />
+      <textarea
+        id="code"
+        name="code"
+        placeholder="Enter your Python code here..."
+      ></textarea
+      ><br /><br />
+      <button type="submit">Submit Code</button>
+    </form>
+
+    <div id="results" class="results"></div>
+
+    <script>
+      document
+        .getElementById("codeForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const code = document.getElementById("code").value;
+
+          const response = await fetch("/submit-code", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ code }),
+          });
+
+          const data = await response.json();
+          const resultsDiv = document.getElementById("results");
+
+          if (data.error) {
+            resultsDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+          } else {
+            let resultHtml = "";
+
+            resultHtml += `<h3>Feedback</h3><p>${data.feedback}</p>`;
+            resultsDiv.innerHTML = resultHtml;
+          }
+        });
+    </script>
+  </body>
+</html>
